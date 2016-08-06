@@ -31,15 +31,16 @@ def print(students)
     first_letter = gets.chomp.upcase
     students.each.with_index(1) do |student, index|
       student[:name].capitalize!
-      if first_letter == student[:name].chars.first
+      if first_letter == student[:name].chars.first && student[:name].length < 12
         puts "#{index},#{student[:name]} (#{student[:cohort]} cohort)"
-      else exit
       end
     end
     else
     students.each.with_index(1) do |student, index|
+      if student[:name].length < 12
       student[:name].capitalize!
       puts "#{index},#{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
