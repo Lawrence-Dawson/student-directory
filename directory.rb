@@ -23,23 +23,13 @@ def print_header
 end
 
 def print(students)
-  puts "Would you like to enter the first letter of the name or names you wish to print?"
-  puts "Yes or No?"
-  proceed_y_n = gets.chomp.upcase
-  if proceed_y_n == "YES"
-    puts "Enter the first letter of the name or names you wish to print"
-    first_letter = gets.chomp.upcase
-    students.each.with_index(1) do |student, index|
-      student[:name].capitalize!
-      if first_letter == student[:name].chars.first && student[:name].length < 12
-        puts "#{index},#{student[:name]} (#{student[:cohort]} cohort)"
-      end
-    end
-    else
+  student_count = 0
+  until student_count == students.length
     students.each.with_index(1) do |student, index|
       if student[:name].length < 12
       student[:name].capitalize!
       puts "#{index},#{student[:name]} (#{student[:cohort]} cohort)"
+      student_count += 1
     end
   end
 end
