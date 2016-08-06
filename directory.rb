@@ -23,13 +23,18 @@ def print_header
 end
 
 def print(students)
+  puts "Enter the first letter of the name or names you wish to print"
+  first_letter = gets.chomp.upcase
   students.each.with_index(1) do |student, index|
+    student[:name].capitalize!
+    if first_letter == student[:name].chars.first
     puts "#{index},#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
+end
 end
 
 students = input_students
