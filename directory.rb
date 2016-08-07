@@ -3,22 +3,47 @@ def input_students
   puts " Please enter the new students details ".center(80, '*')
   puts
   puts " To exit program just leave 'name' blank ".center(80, '*')
+  # create an empty array
   students = []
    while true do
-    #add the students details to a new array called 'students'
+    #add the student hash to the array
     puts "Name?"
     name = gets.chomp
     if name.empty?
-      break
+      puts "Do you wish to exit? Yes/No"
+      answer = gets.chomp.capitalize
+      if answer == "Yes"
+        break
+      else
+        name = "Anonymous"
+        puts "name stored as #{name}"
+      end
     end
     puts "Age?"
     age = gets.chomp
+
+    ages = [*'1'..'150']
+
+    until ages.include? age
+    puts "Enter a year. E.g. 25"
+    age = gets.chomp
+    end
+
+    age = age.to_i
+
     puts "Nationality?"
     nationality = gets.chomp
     puts "Hobbies?"
     hobbies = gets.chomp
     puts "Enter Cohort"
-    cohort = gets.chomp
+    cohort = gets.chomp.capitalize!
+
+    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    until months.include? cohort
+      puts "Enter a valid month. E.g. January"
+           cohort = gets.chomp.capitalize
+    end
 
     students << {name: name, age: age, nationality: nationality,
        hobbies: hobbies, cohort: cohort}
