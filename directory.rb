@@ -2,32 +2,27 @@ def input_students
   puts "".center(80,'*')
   puts " Please enter the new students details ".center(80, '*')
   puts
-  puts " To exit program just leave all options blank ".center(80, '*')
-  # create an empty array
+  puts " To exit program just leave 'name' blank ".center(80, '*')
   students = []
-  puts "Name?"
-  name = gets.chomp
-  puts "Age?"
-  age = gets.chomp
-  puts "Nationality?"
-  nationality = gets.chomp
-  puts "Hobbies?"
-  hobbies = gets.chomp
-  # while the name is not empty, repeat this code
-   while !name.empty? do
-    #add the student hash to the array
-    students << {name: name, age: age, nationality: nationality,
-       hobbies: hobbies, cohort: :November}
-    puts " Now we have #{students.count} students ".center(80,'*')
-    #get another name from the user
+   while true do
+    #add the students details to a new array called 'students'
     puts "Name?"
     name = gets.chomp
+    if name.empty?
+      break
+    end
     puts "Age?"
     age = gets.chomp
     puts "Nationality?"
     nationality = gets.chomp
     puts "Hobbies?"
     hobbies = gets.chomp
+    puts "Enter Cohort"
+    cohort = gets.chomp
+
+    students << {name: name, age: age, nationality: nationality,
+       hobbies: hobbies, cohort: cohort}
+       puts " Now we have #{students.count} students ".center(80,'*')
   end
   #return the array of students
   students
