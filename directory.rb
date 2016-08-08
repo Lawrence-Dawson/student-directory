@@ -47,7 +47,11 @@ def input_students
 
     students << {name: name, age: age, nationality: nationality,
        hobbies: hobbies, cohort: cohort}
+    unless students.count < 2
        puts " Now we have #{students.count} students ".center(80,'*')
+      else
+        puts " Now we have #{students.count} student ".center(80,'*')
+      end
   end
   #return the array of students
   students
