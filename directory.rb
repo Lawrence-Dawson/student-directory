@@ -63,6 +63,8 @@ def print_header
 end
 
 def print(students)
+  #check that there are actual students
+  if students.count > 0
   #ask which cohort you wish to find
   puts "Enter cohort to print"
   selected = gets.chomp.capitalize
@@ -78,6 +80,9 @@ def print(students)
   to_print.each do |student|
     puts "".center(80,":")
     puts "#{student[:name]}  Age: #{student[:age]}  Nationality: #{student[:nationality]}  Hobbies: #{student[:hobbies]}  (#{student[:cohort]} cohort)"
+    end
+  else
+    puts "No students to print"
     end
   end
 
