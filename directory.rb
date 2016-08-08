@@ -2,20 +2,16 @@
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  # get the first name
-  name = STDIN.gets.chomp
-  # while the name is not empty, repeat this code
-  while !name.empty? do
-    # add the student hash to the array
-    #@students << {name: name, cohort: :november}
-    add_student (name)
+  name = STDIN.gets.chomp # get the first name
+  while !name.empty? do # while the name is not empty, repeat this code
+    add_student (name) # add the student hash to the array
     puts "Now we have #{@students.count} students"
-    # get another name from the user
-    name = STDIN.gets.chomp
+    name = STDIN.gets.chomp # get another name from the user
   end
 end
 
 def interactive_menu
+  try_load_students
   loop do
     print_menu
     process(STDIN.gets.chomp)
@@ -59,10 +55,8 @@ def print_header
 end
 
 def save_students
-  # open the file for writing
-  file = File.open("students.csv", "w")
-  #iterate over the array of students
-  @students.each do |student|
+  file = File.open("students.csv", "w") # open the file for writing
+  @students.each do |student| #iterate over the array of students
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
@@ -74,7 +68,6 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    #@students << {name: name, cohort: cohort.to_sym}
     add_student (name)
   end
   file.close
@@ -85,7 +78,7 @@ def try_load_students
   if filename.nil? # get out of the method if it isn't given
     load_students
   else
-    if File.exists?(filename) # if it exists
+    if File.exists?(filename) # check if it exists
     load_students(filename)
       puts "Loaded #{@students.count} from #{filename}"
   else # if it doesn't exist
@@ -109,5 +102,4 @@ end
 def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
-try_load_students
 interactive_menu
