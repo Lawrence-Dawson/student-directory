@@ -8,7 +8,7 @@ def input_students
    while true do
     #add the student hash to the array
     puts "Name?"
-    name = gets.chomp.capitalize
+    name = gets.tr("\n","").capitalize
     if name.empty?
       puts "Do you wish to exit? Yes/No"
       answer = gets.chomp.capitalize
