@@ -65,15 +65,14 @@ end
 def save_students
   puts "What would you like to call the file?"
   save_as = STDIN.gets.chomp
-  file = File.open(save_as, "w") # open the file for writing
+  File.open(save_as, "w") do |file|# open the file for writing
   @students.each do |student| #iterate over the array of students
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
-  file.close
 end
-
+end
 #def load_students_on_startup
 #  filename = ARGV.first # first argument from the command line
 #  if filename.nil? # get out of the method if it isn't given
@@ -108,20 +107,20 @@ end
 
 def load_file(filename)
   if File.exists?(filename)
-    file = File.open(filename, "r")
+    File.open(filename, "r") do |file|
     file.readlines.each do |line|
       name, cohort = line.chomp.split(',')
     add_student (name)
   end
+end
 else
   puts "file not found"
   interactive_menu
 end
-file.close
 end
 
 def create_file(filename)
-    new_file = File.open(filename, "w")
+    File.open(filename, "w")
 end
 
 def add_student (name)
