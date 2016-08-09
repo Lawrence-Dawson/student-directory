@@ -1,3 +1,5 @@
+require 'csv'
+
 @students = [] # an empty array accessible to all methods
 def input_students
   puts "Please enter the names of the students"
@@ -65,11 +67,9 @@ end
 def save_students
   puts "What would you like to call the file?"
   save_as = STDIN.gets.chomp
-  File.open(save_as, "w") do |file|# open the file for writing
+  CSV.open("#{save_as}.csv", "w") do |csv|# open the file for writing
   @students.each do |student| #iterate over the array of students
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  csv << [student[:name], student[:cohort]]
   end
 end
 end
