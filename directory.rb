@@ -15,7 +15,7 @@ def add_name
 end
 
 def interactive_menu
-  load_students_on_startup
+  load_or_create_choice
   loop do
     print_menu
     process(STDIN.gets.chomp)
@@ -26,7 +26,8 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "4. Load a file"
+  puts "5. Create a file"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -46,7 +47,9 @@ def process(selection)
   when "3"
     save_students
   when "4"
-    load_or_create_students
+    load_file(STDIN.gets.chomp)
+  when "5"
+    create_file(STDIN.gets.chomp)
   when "9"
     exit # this will cause the program to terminate
   else
@@ -60,7 +63,9 @@ def print_header
 end
 
 def save_students
-  file = File.open("students.csv", "w") # open the file for writing
+  puts "What would you like to call the file?"
+  save_as = STDIN.gets.chomp
+  file = File.open(save_as, "w") # open the file for writing
   @students.each do |student| #iterate over the array of students
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
@@ -69,32 +74,54 @@ def save_students
   file.close
 end
 
-def load_or_create_students(filename = "students.csv")
+#def load_students_on_startup
+#  filename = ARGV.first # first argument from the command line
+#  if filename.nil? # get out of the method if it isn't given
+#    load_or_create_choice
+#  else
+#    if File.exists?(filename) # check if it exists
+#    load_file(filename)
+#      puts "Loaded #{@students.count} from #{filename}"
+#  else # if it doesn't exist
+#    puts "Sorry, #{filename} doesn't exist."
+#    interactive_menu
+#  end
+#end
+
+def load_or_create_choice
+    puts "Which of the following do you wish to do?"
+    puts "1. Load a student file"
+    puts "2. Create a new student file"
+    file_choice(STDIN.gets.chomp)
+end
+
+def file_choice(choice)
+  puts "You chose choice #{choice}"
+  case choice
+  when "1"
+    puts "Name the file you wish to load"
+     load_file(STDIN.gets.chomp)
+  when "2"
+    create_file(STDIN.gets.chomp)
+  end
+end
+
+def load_file(filename)
   if File.exists?(filename)
     file = File.open(filename, "r")
     file.readlines.each do |line|
       name, cohort = line.chomp.split(',')
     add_student (name)
   end
-  else
-    file = File.open("students.csv", "w")
+else
+  puts "file not found"
+  interactive_menu
 end
-  file.close
+file.close
 end
 
-def load_students_on_startup
-  filename = ARGV.first # first argument from the command line
-  if filename.nil? # get out of the method if it isn't given
-    load_or_create_students
-  else
-    if File.exists?(filename) # check if it exists
-    load_or_create_students(filename)
-      puts "Loaded #{@students.count} from #{filename}"
-  else # if it doesn't exist
-    puts "Sorry, #{filename} doesn't exist."
-    exit # quit the program
-  end
-  end
+def create_file(filename)
+    new_file = File.open(filename, "w")
 end
 
 def add_student (name)
