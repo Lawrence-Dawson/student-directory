@@ -8,11 +8,13 @@ def input_students
 end
 
 def add_name
-  name = STDIN.gets.chomp # get the first name
+  name = STDIN.gets.chomp
+  cohort = STDIN.gets.chomp # get the first name
   while !name.empty? do # while the name is not empty, repeat this code
-    add_student (name) # add the student hash to the array
+    add_student(name, cohort) # add the student hash to the array
     puts "Now we have #{@students.count} students"
-    name = STDIN.gets.chomp # get another name from the user
+    name = STDIN.gets.chomp
+    cohort = STDIN.gets.chomp # get another name from the user
   end
 end
 
@@ -101,17 +103,19 @@ def file_choice(choice)
     puts "Name the file you wish to load"
      load_file(STDIN.gets.chomp)
   when "2"
-    create_file(STDIN.gets.chomp)
+     create_file(STDIN.gets.chomp)
   end
 end
 
 def load_file(filename)
   if File.exists?(filename)
-    File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-    add_student (name)
-  end
+    CSV.foreach(filename, "r") do |row|
+      #add_student(row[0])
+      add_student(row[0], row[1])
+#    puts @students
+    #File.open(filename, "r") do |file|
+    #file.readlines.each do |line|
+    #name, cohort = line.chomp.split(',')
 end
 else
   puts "file not found"
@@ -123,8 +127,8 @@ def create_file(filename)
     File.open(filename, "w")
 end
 
-def add_student (name)
-  @students << {name: name, cohort: :november}
+def add_student (name, cohort)
+  @students << {name: name, cohort: cohort}
 end
 
 
