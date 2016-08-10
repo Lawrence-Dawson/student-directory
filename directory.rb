@@ -2,7 +2,7 @@ require 'csv'
 
 @students = [] # an empty array accessible to all methods
 def input_students
-  puts "Please enter the names of the students"
+  puts "Please enter the names of the student and then their cohort"
   puts "To finish, just hit return twice"
   add_name
 end
